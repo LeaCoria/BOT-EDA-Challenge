@@ -1,7 +1,7 @@
 import connection
 import asyncio
 
-token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoibGVhbmRyb2NvcmlhMTlAZ21haWwuY29tIn0.tA0VMyJQKz5b6wk1dI3hkPIxfupEHw8LMyu-ngl80Ic"
+token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiTGVhQ29yaWEwMDEifQ.41K46CdQ6MpSq4RrucdDxt8LhPax_XRUXo8ac2dpj80"
 newConnection = connection.Connection(token)
 
 try:
