@@ -2,7 +2,7 @@ import websockets
 import time
 import json
 import asyncio
-import makemoves
+import makemove
 
 class Connection():
     def __init__(self,token):
@@ -41,8 +41,9 @@ class Connection():
                                 }
                                 )
                 if requestData["event"] == "your_turn":
-                    makeMoves = makemoves.Makemoves(requestData)
-                    await makeMoves.mover()
+                    print(requestData)
+                    makeMove = makemove.Makemove(requestData)
+                    await makeMove.move()
             except Exception:
                 print(f"Error {Exception}")
                 break
