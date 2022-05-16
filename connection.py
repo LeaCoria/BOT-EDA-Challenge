@@ -1,3 +1,4 @@
+from unittest import result
 import websockets
 import time
 import json
@@ -41,9 +42,21 @@ class Connection():
                                 }
                                 )
                 if requestData["event"] == "your_turn":
-                    print(requestData)
+                    print(f"\n\n {requestData}")
                     makeMove = makemove.Makemove(requestData)
-                    await makeMove.move()
+                    result = makeMove.printBoard()
+                    await self.send(
+                        websocket,
+                        "move",
+                        {
+                            "game_id": requestData["data"]["game_id"],
+                            "turn_token": requestData["data"]["turn_token"],
+                            "from_row": result["from_row"], 
+                            "from_col": result["from_col"], 
+                            "to_row": result["to_row"], 
+                            "to_col": result["to_col"], 
+                        }
+                    )
             except Exception:
                 print(f"Error {Exception}")
                 break
@@ -52,9 +65,9 @@ class Connection():
         
         message = json.dumps(
             {
-                'action' : action,
-                'data': data,
+                "action" : action,
+                "data": data,
             }
         )
-        print(message)
+        print(f"\n\n{message}")
         await websocket.send(message)
