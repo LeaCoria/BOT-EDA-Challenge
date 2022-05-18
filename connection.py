@@ -23,7 +23,7 @@ class Connection():
                 time.sleep(3)
                 
     async def play(self, websocket):
-    
+        
         while True:
             try:
                 request = await websocket.recv()
