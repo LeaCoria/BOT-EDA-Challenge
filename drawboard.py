@@ -46,25 +46,26 @@ class Drawboard():
         #After read the board i'm going to make a 2 dimensions list
         #with the positions of my peons and another for my enemie's
         #peons' position on the board. So its gonna be lists of 3x2.
-        cantPeons = 3
-        coords = 2
-        myPeons = [ ([0]*coords) for cantPeons in range(cantPeons) ]
-        enPeons = [ ([0]*coords) for cantPeons in range(cantPeons) ]
-        indexRows = 0
-        indexColumns = 0
-        myOrder = 0
-        enOrder = 0
+        myPeons = []
+        enPeons = []
+        wallsH = []
+        wallsV = []
+        mySide = self.requestData["data"]["side"]
+        if mySide == "N":
+            enSide = "S"
+        else:
+            enSide = "N"
         for arrRows in arrayBoard:
             for arrColumns in arrayBoard:
-                if arrayBoard[indexRows][indexColumns] == self.requestData["data"]["side"]:
-                    myPeons [myOrder][0] = int(indexRows/2)
-                    myPeons [myOrder][1] = int(indexColumns/2)
-                    myOrder += 1
-                if ( arrayBoard[indexRows][indexColumns] != self.requestData["data"]["side"] and arrayBoard[indexRows][indexColumns] != " " ):
-                    enPeons [enOrder][0] = int(indexRows/2)
-                    enPeons [enOrder][1] = int(indexColumns/2)
-                    enOrder += 1
-                indexColumns += 1
+                if arrayBoard[indexRows][indexColumns] == mySide:
+                    myPeons.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                if ( arrayBoard[indexRows][indexColumns] == enSide ):
+                    enPeons.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                if ( arrayBoard[indexRows][indexColumns] == "-" and arrayBoard[indexRows][indexColumns+1] == "*" and arrayBoard[indexRows][indexColumns+2] == "-"):
+                    wallsH.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                if ( arrayBoard[indexRows][indexColumns] == "|" and arrayBoard[indexRows+1][indexColumns] == "*" and arrayBoard[indexRows+2][indexColumns] == "|"):
+                    wallsV.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                    indexColumns += 1
             indexRows += 1
             indexColumns = 0
         return self.find_move(myPeons, enPeons, arrayBoard)
