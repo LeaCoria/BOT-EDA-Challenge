@@ -15,7 +15,6 @@ class Connection():
         
         while True:
             try:
-                #print(f"\n\nConnection to \n\n{self.uri}\n\n")
                 async with websockets.connect(self.uri) as websocket:
                     await self.play(websocket)
             except Exception:
