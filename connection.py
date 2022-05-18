@@ -3,7 +3,7 @@ import websockets
 import time
 import json
 import asyncio
-import makemove
+import drawboard
 
 class Connection():
     def __init__(self,token):
@@ -42,8 +42,8 @@ class Connection():
                                 )
                 if requestData["event"] == "your_turn":
                     print(f"\n\n {requestData}")
-                    makeMove = makemove.Makemove(requestData)
-                    result = makeMove.printBoard()
+                    drawBoard = drawboard.Drawboard(requestData)
+                    result = drawBoard.printBoard()
                     await self.send(
                         websocket,
                         "move",
