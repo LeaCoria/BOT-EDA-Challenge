@@ -1,6 +1,7 @@
 import asyncio
 from random import randint
 import json
+import strategy
 
 class Drawboard():
     def __init__ (self, requestData):
@@ -32,7 +33,7 @@ class Drawboard():
                         boardPrinter += element
                         arrayBoard [indexRows][indexCol] = element
                 else:
-                    boardPrinter += "\n" + rows[indexRows] + "|" + element
+                    boardPrinter += "\n" + rows[indexRows+1] + "|" + element
                     indexRows += 1
                     indexCol = 0
                     arrayBoard [indexRows][indexCol] = element
@@ -55,25 +56,29 @@ class Drawboard():
             enSide = "S"
         else:
             enSide = "N"
+        indexRows = 0
+        indexColumns = 0
         for arrRows in arrayBoard:
             for arrColumns in arrayBoard:
                 if arrayBoard[indexRows][indexColumns] == mySide:
                     myPeons.append( [ int(indexRows/2) , int(indexColumns/2) ] )
                 if ( arrayBoard[indexRows][indexColumns] == enSide ):
                     enPeons.append( [ int(indexRows/2) , int(indexColumns/2) ] )
-                if ( arrayBoard[indexRows][indexColumns] == "-" and arrayBoard[indexRows][indexColumns+1] == "*" and arrayBoard[indexRows][indexColumns+2] == "-"):
-                    wallsH.append( [ int(indexRows/2) , int(indexColumns/2) ] )
-                if ( arrayBoard[indexRows][indexColumns] == "|" and arrayBoard[indexRows+1][indexColumns] == "*" and arrayBoard[indexRows+2][indexColumns] == "|"):
-                    wallsV.append( [ int(indexRows/2) , int(indexColumns/2) ] )
-                    indexColumns += 1
+                if indexColumns < 16 :
+                    if ( arrayBoard[indexRows][indexColumns] == "-" and arrayBoard[indexRows][indexColumns+1] == "*" and arrayBoard[indexRows][indexColumns+2] == "-"):
+                        wallsH.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                if indexRows < 8:
+                    if ( arrayBoard[indexRows][indexColumns] == "|" and arrayBoard[indexRows+1][indexColumns] == "*" and arrayBoard[indexRows+2][indexColumns] == "|"):
+                        wallsV.append( [ int(indexRows/2) , int(indexColumns/2) ] )
+                indexColumns += 1
             indexRows += 1
             indexColumns = 0
-        return self.find_move(myPeons, enPeons, arrayBoard)
+        return self.find_move(myPeons, enPeons, wallsH, wallsV, arrayBoard)
     
         
-    def find_move(self, myPeons, enPeons, arrayBoard):
+    def find_move(self, myPeons, enPeons, wallsH, wallsV, arrayBoard):
 
         #With the information in list myPeons i'm going to determinate
         #the peon to move and the move itself
-        strategy = strategy.Strategy(self.requestData)
-        return strategy.main_strategy(myPeons, enPeons, arrayBoard)
+        strategyPlay = strategy.Strategy(self.requestData)
+        return strategyPlay.main_strategy(myPeons, enPeons, wallsH, wallsV, arrayBoard)
