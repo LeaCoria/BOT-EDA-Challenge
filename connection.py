@@ -42,6 +42,7 @@ class Connection():
                                 )
                 if requestData["event"] == "your_turn":
                     print(f"\n\n {requestData}")
+                    print(requestData["data"]["board"])
                     drawBoard = drawboard.Drawboard(requestData)
                     result = drawBoard.printBoard()
                     await self.send(
@@ -56,8 +57,11 @@ class Connection():
                             "to_col": result["to_col"], 
                         }
                     )
-            except Exception:
-                print(f"Error {Exception}")
+            except KeyboardInterrupt:
+                print("Exiting...")
+                break
+            except Exception as e:
+                print("error {}".format(str(e)))
                 break
     
     async def send (self,websocket,action,data):
