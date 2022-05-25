@@ -1,7 +1,4 @@
-import asyncio
-from random import randint
-import json
-import strategy
+import defending_strategy
 
 class Drawboard():
     def __init__ (self, requestData):
@@ -73,12 +70,12 @@ class Drawboard():
                 indexColumns += 1
             indexRows += 1
             indexColumns = 0
-        return self.find_move(myPeons, enPeons, wallsH, wallsV, arrayBoard)
+        return self.find_move(myPeons, enPeons, wallsH, wallsV)
     
         
-    def find_move(self, myPeons, enPeons, wallsH, wallsV, arrayBoard):
+    def find_move(self, myPeons, enPeons, wallsH, wallsV):
 
         #With the information in list myPeons i'm going to determinate
         #the peon to move and the move itself
-        strategyPlay = strategy.Strategy(self.requestData)
-        return strategyPlay.main_strategy(myPeons, enPeons, wallsH, wallsV, arrayBoard)
+        strategyPlay = defending_strategy.Defending_Strategy(self.requestData)
+        return strategyPlay.main_defending_strategy(myPeons, enPeons, wallsH, wallsV)
