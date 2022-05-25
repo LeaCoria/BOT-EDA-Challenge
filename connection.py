@@ -35,9 +35,11 @@ class Connection():
                     if requestData["data"]["opponent"] == "leandrocoria19@gmail.com":
                         await self.send(
                                 websocket,
-                                "accept_challenge",
                                 {
-                                    "challenge_id": requestData["data"]["challenge_id"],
+                                    "action": "accept_challange",
+                                    "data":{
+                                        "challange_id": requestData["data"]["challange_id"]
+                                    }
                                 }
                                 )
                 if requestData["event"] == "your_turn":
@@ -47,15 +49,7 @@ class Connection():
                     result = drawBoard.printBoard()
                     await self.send(
                         websocket,
-                        "move",
-                        {
-                            "game_id": requestData["data"]["game_id"],
-                            "turn_token": requestData["data"]["turn_token"],
-                            "from_row": result["from_row"], 
-                            "from_col": result["from_col"], 
-                            "to_row": result["to_row"], 
-                            "to_col": result["to_col"], 
-                        }
+                        result
                     )
             except KeyboardInterrupt:
                 print("Exiting...")
@@ -64,13 +58,8 @@ class Connection():
                 print("error {}".format(str(e)))
                 break
     
-    async def send (self,websocket,action,data):
+    async def send (self,websocket,message):
         
-        message = json.dumps(
-            {
-                "action" : action,
-                "data": data,
-            }
-        )
+        message = json.dumps(message)
         print(f"\n\n{message}")
         await websocket.send(message)
