@@ -1,4 +1,4 @@
-import connection
+import connection as connection
 import asyncio
 
 token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoibGVhbmRyb2NvcmlhMTlAZ21haWwuY29tIn0.tA0VMyJQKz5b6wk1dI3hkPIxfupEHw8LMyu-ngl80Ic"
