@@ -32,16 +32,15 @@ class Connection():
                     self.user_list = requestData["data"]["users"]
                     print(f"\n\nUpdated user_list: \n{self.user_list}")
                 if requestData["event"] == "challenge":
-                    if ( requestData["data"]["opponent"] == "pabloTestBot" ) or ( requestData["data"]["opponent"] == "pablogg011@gmail.com" ):
-                        await self.send(
-                                websocket,
-                                {
-                                    "action": "accept_challenge", 
-                                    "data": {
-                                        "challenge_id": requestData["data"]["challenge_id"]
-                                }
-                                }
-                        )
+                    await self.send(
+                            websocket,
+                            {
+                                "action": "accept_challenge", 
+                                "data": {
+                                    "challenge_id": requestData["data"]["challenge_id"]
+                            }
+                            }
+                    )
                 if requestData["event"] == "your_turn":
                     print(f"\n\n {requestData}")
                     print(requestData["data"]["board"])
