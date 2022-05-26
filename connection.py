@@ -26,22 +26,22 @@ class Connection():
         while True:
             try:
                 request = await websocket.recv()
-                print(f"{request}")
+                print(f"{request}\n")
                 requestData = json.loads(request)
                 if requestData["event"] == "update_user_list":
                     self.user_list = requestData["data"]["users"]
                     print(f"\n\nUpdated user_list: \n{self.user_list}")
                 if requestData["event"] == "challenge":
-                    if requestData["data"]["opponent"] == "leandrocoria19@gmail.com":
+                    if ( requestData["data"]["opponent"] == "pabloTestBot" ) or ( requestData["data"]["opponent"] == "pablogg011@gmail.com" ):
                         await self.send(
                                 websocket,
                                 {
-                                    "action": "accept_challange",
-                                    "data":{
-                                        "challange_id": requestData["data"]["challange_id"]
-                                    }
+                                    "action": "accept_challenge", 
+                                    "data": {
+                                        "challenge_id": requestData["data"]["challenge_id"]
                                 }
-                                )
+                                }
+                        )
                 if requestData["event"] == "your_turn":
                     print(f"\n\n {requestData}")
                     print(requestData["data"]["board"])
