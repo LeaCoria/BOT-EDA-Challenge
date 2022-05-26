@@ -13,7 +13,7 @@ class TestDefendigStrategy(unittest.TestCase):
                 "game_id": "ab16e71c-caeb-11eb-975e-0242c0a80004"
             }
             }
-        myPeons = [[3,8],[2,8],[1,8]]
+        '''myPeons = [[3,8],[2,8],[1,8]]
         enPeons = [[1,0],[1,1],[1,2]]
         wallsH = [[0,0],[0,2],[0,4],[0,6],[3,7]]
         wallsV = [[1,7],[5,7],[7,6],[5,6]]
@@ -37,6 +37,46 @@ class TestDefendigStrategy(unittest.TestCase):
         result = horizontal_move.Horizontal_Move(requestData)
         result = result.verify_horizontal_move(myPeons, enPeons, freePeonsHorizontal, wallsH, wallsV)
         messageToSend = self.send(3,7,3,6,requestData)
+        self.assertEqual( result, messageToSend )
+        
+        myPeons = [[0,7],[0,8],[3,8]]
+        enPeons = [[8,0],[8,1],[3,6]]
+        wallsH = [[0,0],[0,2],[0,4],[0,6],[3,7]]
+        wallsV = [[1,7],[5,7],[7,6],[5,6],[3,5]]
+        freePeonsHorizontal = [[3,8]]
+        result = horizontal_move.Horizontal_Move(requestData)
+        result = result.verify_horizontal_move(myPeons, enPeons, freePeonsHorizontal, wallsH, wallsV)
+        messageToSend = self.send(3,8,3,7,requestData)
+        self.assertEqual( result, messageToSend )
+        
+        myPeons = [[0,7],[0,8],[3,7]]
+        enPeons = [[8,0],[8,1],[3,6]]
+        wallsH = [[0,0],[0,2],[0,4],[0,6],[3,7]]
+        wallsV = [[1,7],[5,7],[7,6],[5,6],[3,5]]
+        freePeonsHorizontal = [[3,7]]
+        result = horizontal_move.Horizontal_Move(requestData)
+        result = result.verify_horizontal_move(myPeons, enPeons, freePeonsHorizontal, wallsH, wallsV)
+        messageToSend = self.send(3,7,4,6,requestData)
+        self.assertEqual( result, messageToSend )
+        
+        myPeons = [[0,7],[0,8],[3,7]]
+        enPeons = [[8,0],[8,1],[3,6]]
+        wallsH = [[0,0],[0,2],[0,4],[0,6],[3,7]]
+        wallsV = [[1,7],[5,7],[7,6],[5,6],[2,5]]
+        freePeonsHorizontal = [[3,7]]
+        result = horizontal_move.Horizontal_Move(requestData)
+        result = result.verify_horizontal_move(myPeons, enPeons, freePeonsHorizontal, wallsH, wallsV)
+        messageToSend = self.send(3,7,4,6,requestData)
+        self.assertEqual( result, messageToSend )'''
+        
+        myPeons = [[0,7],[0,8],[3,7]]
+        enPeons = [[8,0],[8,1],[3,6]]
+        wallsH = [[0,0],[0,2],[0,4],[0,6],[3,7],[3,5]]
+        wallsV = [[1,7],[5,7],[7,6],[5,6],[2,5]]
+        freePeonsHorizontal = [[3,7]]
+        result = horizontal_move.Horizontal_Move(requestData)
+        result = result.verify_horizontal_move(myPeons, enPeons, freePeonsHorizontal, wallsH, wallsV)
+        messageToSend = self.send(3,7,2,6,requestData)
         self.assertEqual( result, messageToSend )
         
     def send(self, from_row, from_col, to_row, to_col, requestData):
